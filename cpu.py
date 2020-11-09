@@ -160,7 +160,16 @@ class CPU:
               self.pc = self.register[given_reg]
             else:
               self.pc += 2
-                 
+
+          elif ir == 0b01010110: # JNE R2    
+            given_reg = self.ram_read(self.pc+1)
+            # If `E` flag is clear (false, 0), jump to the address stored in the given
+            # register.
+            if self.flag != 0b00000001:
+              self.pc = self.register[given_reg]
+            else:
+              self.pc += 2  
+
 
 
 
