@@ -141,34 +141,43 @@ class CPU:
                 # # print the value now
                 # print(f'The is multiplied value>>>>>{mul_value}')
                 # self.pc += 3
-            print(f'Register>>>>{self.register}')    
-          elif ir == 0b10100111: # CMP R0,R1 
-            operand_c1 = self.ram_read(self.pc+1)
-            operand_c2 = self.ram_read(self.pc+2)
-            # call alu function using the above
-            self.alu("CMP", operand_c1, operand_c2)
-            self.pc += 3
+            # print(f'Register>>>>{self.register}')    
+            elif ir == 0b10100111: 
+              operand_c1 = self.ram_read(self.pc+1)
+              operand_c2 = self.ram_read(self.pc+2)
+              # call alu function using the above
+              self.alu("CMP", operand_c1, operand_c2)
+              self.pc += 3
 
-          elif ir == 0b01010100: # JMP R2   
-            self.pc += 1
-            given_reg = self.ram_read(self.pc)
-            self.pc = self.register[given_reg]
-
-          elif ir == 0b01010101: # JEQ R2  
-            given_reg = self.ram_read(self.pc+1)
-            if self.flag == 0b00000001:
+            elif ir == 0b01010100: # JMP R2   
+              self.pc += 1
+              given_reg = self.ram_read(self.pc)
               self.pc = self.register[given_reg]
-            else:
-              self.pc += 2
 
-          elif ir == 0b01010110: # JNE R2    
-            given_reg = self.ram_read(self.pc+1)
-            # If `E` flag is clear (false, 0), jump to the address stored in the given
-            # register.
-            if self.flag != 0b00000001:
-              self.pc = self.register[given_reg]
-            else:
-              self.pc += 2  
+            elif ir == 0b01010101: # JEQ R2  
+              given_reg = self.ram_read(self.pc+1)
+              if self.flag == 0b00000001:
+                self.pc = self.register[given_reg]
+              else:
+                self.pc += 2
+
+            elif ir == 0b01010110: # JNE R2    
+              given_reg = self.ram_read(self.pc+1)
+              # If `E` flag is clear (false, 0), jump to the address stored in the given
+              # register.
+              if self.flag != 0b00000001:
+                self.pc = self.register[given_reg]
+              else:
+                self.pc += 2  
+
+            elif ir == 0b01000111:
+              # grab the address that we would like to print
+              operand_print = self.ram_read(self.pc+1)     
+              print(f'Print the specific value{self.register[operand_print]}')
+              print(f'Register>>>>{self.register}') 
+              # move that pc value by updating it
+              self.pc += 2    
+            
 
 
 
