@@ -149,6 +149,20 @@ class CPU:
             self.alu("CMP", operand_c1, operand_c2)
             self.pc += 3
 
+          elif ir == 0b01010100: # JMP R2   
+            self.pc += 1
+            given_reg = self.ram_read(self.pc)
+            self.pc = self.register[given_reg]
+
+          elif ir == 0b01010101: # JEQ R2  
+            given_reg = self.ram_read(self.pc+1)
+            if self.flag == 0b00000001:
+              self.pc = self.register[given_reg]
+            else:
+              self.pc += 2
+                 
+
+
 
 
 
