@@ -11,6 +11,7 @@ class CPU:
         self.register = [0] * 8
         self.pc = 0
         self.sp = 7
+        self.flag = 0
 
     def load(self, file_name):
         """Load a program into memory."""
@@ -50,7 +51,18 @@ class CPU:
         #elif op == "SUB": etc
         elif op == "MUL":
             return self.register[reg_a] * self.register[reg_b] # a = a * b  8 = 8 * 9
-
+        elif op == "CMP":
+          if self.register[reg_a] == self.register[reg_b]:
+            #If they are equal, set the Equal `E` flag to 1
+            self.flag = 0b00000001
+          elif self.register[reg_a] < self.register[reg_b]:
+            #If registerA is less than registerB, set the Less-than `L` flag to 1,
+            self.flag = 0b00000100
+          elif self.registers[reg_a] > self.registers[reg_b]:
+              self.flag = 0b00000010   
+          # otherwise set it to 0     
+          else:
+            self.flag = 0b00000000    
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -130,6 +142,14 @@ class CPU:
                 # print(f'The is multiplied value>>>>>{mul_value}')
                 # self.pc += 3
             print(f'Register>>>>{self.register}')    
+          elif ir == 0b10100111: # CMP R0,R1 
+            operand_c1 = self.ram_read(self.pc+1)
+            operand_c2 = self.ram_read(self.pc+2)
+            # call alu function using the above
+            self.alu("CMP", operand_c1, operand_c2)
+            self.pc += 3
+
+
 
 
 
