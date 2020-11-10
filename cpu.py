@@ -114,7 +114,6 @@ class CPU:
                 self.pc += 3
 
             elif ir ==  0b00000001: #HLT  
-                print('working for printing') 
                 self.pc += 1  
                 running = False
                        
