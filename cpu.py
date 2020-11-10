@@ -114,13 +114,12 @@ class CPU:
                 self.pc += 3
 
             elif ir ==  0b00000001: #HLT  
-                print('working for printing') 
                 self.pc += 1  
                 running = False
                        
             elif ir == 0b01000111:  # PRN    this is the index at 3 --->this should print
                 operand_a = self.ram_read(self.pc+1)  # grab the next pc value in decimal
-                print(f'Print 8 here>>>>>>>{self.register[operand_a]}')   # this should print 8
+                print(f'Print>>>>>>>{self.register[operand_a]}')   # this should print 8
                 self.pc += 2
             elif ir == 0b10000010: #LDI R1,9  
                 operand_a1 = self.ram_read(self.pc+1)  # this is the index
@@ -170,13 +169,6 @@ class CPU:
               else:
                 self.pc += 2  
 
-            elif ir == 0b01000111:
-              # grab the address that we would like to print
-              operand_print = self.ram_read(self.pc+1)     
-              print(f'Print the specific value{self.register[operand_print]}')
-              print(f'Register>>>>{self.register}') 
-              # move that pc value by updating it
-              self.pc += 2    
             
 
 
